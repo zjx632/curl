@@ -4445,5 +4445,5 @@ static CURLcode ftp_setup_connection(struct connectdata *conn)
 
   return CURLE_OK;
 }
-
+#undef state
 #endif /* CURL_DISABLE_FTP */

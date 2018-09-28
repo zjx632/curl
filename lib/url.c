@@ -143,7 +143,7 @@ static unsigned int get_protocol_family(unsigned int protocol);
  * Protocol table.
  */
 
-static const struct Curl_handler * const protocols[] = {
+static const struct Curl_handler * const url_protocols[] = {
 
 #ifndef CURL_DISABLE_HTTP
   &Curl_handler_http,
@@ -1954,7 +1954,7 @@ const struct Curl_handler *Curl_builtin_scheme(const char *scheme)
   const struct Curl_handler *p;
   /* Scan protocol handler table and match against 'scheme'. The handler may
      be changed later when the protocol specific setup function is called. */
-  for(pp = protocols; (p = *pp) != NULL; pp++)
+  for(pp = url_protocols; (p = *pp) != NULL; pp++)
     if(strcasecompare(p->scheme, scheme))
       /* Protocol found in table. Check if allowed */
       return p;

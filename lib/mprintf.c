@@ -946,7 +946,10 @@ static int dprintf_formatf(
 
         /* NOTE NOTE NOTE!! Not all sprintf implementations return number of
            output characters */
+#pragma push_macro("sprintf")
+#undef sprintf
         (sprintf)(work, formatbuf, p->data.dnum);
+#pragma pop_macro("sprintf")
         DEBUGASSERT(strlen(work) <= sizeof(work));
         for(fptr = work; *fptr; fptr++)
           OUTCHAR(*fptr);

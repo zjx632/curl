@@ -76,7 +76,7 @@ static const mime_encoder encoders[] = {
 };
 
 /* Base64 encoding table */
-static const char base64[] =
+static const char mime_base64[] =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 /* Quoted-printable character class table.
@@ -421,10 +421,10 @@ static size_t encoder_base64_read(char *buffer, size_t size, bool ateof,
     i = st->buf[st->bufbeg++] & 0xFF;
     i = (i << 8) | (st->buf[st->bufbeg++] & 0xFF);
     i = (i << 8) | (st->buf[st->bufbeg++] & 0xFF);
-    *ptr++ = base64[(i >> 18) & 0x3F];
-    *ptr++ = base64[(i >> 12) & 0x3F];
-    *ptr++ = base64[(i >> 6) & 0x3F];
-    *ptr++ = base64[i & 0x3F];
+    *ptr++ = mime_base64[(i >> 18) & 0x3F];
+    *ptr++ = mime_base64[(i >> 12) & 0x3F];
+    *ptr++ = mime_base64[(i >> 6) & 0x3F];
+    *ptr++ = mime_base64[i & 0x3F];
     cursize += 4;
     st->pos += 4;
     size -= 4;
@@ -441,10 +441,10 @@ static size_t encoder_base64_read(char *buffer, size_t size, bool ateof,
       /* FALLTHROUGH */
     case 1:
       i |= (st->buf[st->bufbeg] & 0xFF) << 16;
-      ptr[0] = base64[(i >> 18) & 0x3F];
-      ptr[1] = base64[(i >> 12) & 0x3F];
+      ptr[0] = mime_base64[(i >> 18) & 0x3F];
+      ptr[1] = mime_base64[(i >> 12) & 0x3F];
       if(++st->bufbeg != st->bufend) {
-        ptr[2] = base64[(i >> 6) & 0x3F];
+        ptr[2] = mime_base64[(i >> 6) & 0x3F];
         st->bufbeg++;
       }
       cursize += 4;
